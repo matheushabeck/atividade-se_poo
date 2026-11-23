@@ -1,0 +1,8 @@
+Desafio aula dia 19/11
+Criar o cadastro de locais com os seguintes atributos
+  -> nome do local
+  -> endereco
+  -> nome do responsável
+  -> celular do responsável
+  -> email do responsável
+
