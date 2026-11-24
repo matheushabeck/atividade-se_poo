@@ -2,6 +2,7 @@ package entidades;
 
 public class Local {
 
+    private int local;
     private String nomeLocal;
     private String endereco;
     private String nomeResponsavel;
