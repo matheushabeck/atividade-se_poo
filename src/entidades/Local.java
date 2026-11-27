@@ -8,6 +8,8 @@ public class Local {
     private String nomeResponsavel;
     private String celularResponsavel;
     private String emailResponsavel;
+    private int id;
+
 
     public String getNomeLocal() {
         return nomeLocal;
@@ -48,4 +50,13 @@ public class Local {
     public void setEmailResponsavel(String emailResponsavel) {
         this.emailResponsavel = emailResponsavel;
     }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
 }

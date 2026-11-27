@@ -1,13 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package interfaces;
 
-/**
- *
- * @author matheus_habeck
- */
+import entidades.Compromisso;
+import java.util.List;
+
 public interface ICRUDcompromisso {
-    
+
+    Compromisso inserir(Compromisso c);
+
+    Compromisso alterar(Compromisso c);
+
+    void deletar(int id);
+
+    Compromisso consultar(int id);
+
+    List<Compromisso> consultar();
 }
