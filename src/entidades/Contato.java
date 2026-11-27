@@ -43,4 +43,8 @@ public class Contato {
     }
    
    
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

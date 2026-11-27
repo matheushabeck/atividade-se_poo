@@ -4,18 +4,37 @@
  */
 package formularios;
 
+import DAO.ContatoDao;
+import DAO.LocalDao;
+import entidades.Contato;
+import entidades.Local;
+
+import DAO.CompromissoDao;
+import entidades.Compromisso;
+import javax.swing.JOptionPane;
 /**
  *
  * @author matheus_habeck
  */
-public class CadastroCompromisso extends javax.swing.JFrame {
+    public class CadastroCompromisso extends javax.swing.JFrame {
 
     /**
      * Creates new form CadastroCompromisso
      */
-    public CadastroCompromisso() {
+        public CadastroCompromisso() {
         initComponents();
-    }
+
+        jComboBoxContato.removeAllItems();
+        jComboBoxLocal.removeAllItems();
+
+        for (Contato c : new ContatoDao().consultar()) {
+            jComboBoxContato.addItem(c.getNome());
+        }
+
+        for (Local l : new LocalDao().consultar()) {
+            jComboBoxLocal.addItem(l.getNomeLocal());
+            }
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +59,6 @@ public class CadastroCompromisso extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBoxContato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxContato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxContatoActionPerformed(evt);
@@ -51,17 +69,19 @@ public class CadastroCompromisso extends javax.swing.JFrame {
 
         jLabel2.setText("Local");
 
-        jComboBoxLocal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxLocalActionPerformed(evt);
             }
         });
 
+        jTextFieldData.setText("xx/xx/xxxx");
+
         jLabel3.setText("Data");
 
         jLabel4.setText("Hora");
 
+        jTextFieldHora.setText("xx:xx");
         jTextFieldHora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldHoraActionPerformed(evt);
@@ -70,7 +90,6 @@ public class CadastroCompromisso extends javax.swing.JFrame {
 
         jLabel5.setText("Observação");
 
-        jTextFieldObservacao.setText("Descrição do Compromisso ...");
         jTextFieldObservacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldObservacaoActionPerformed(evt);
@@ -101,9 +120,8 @@ public class CadastroCompromisso extends javax.swing.JFrame {
                             .addComponent(jTextFieldObservacao, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                             .addComponent(jTextFieldHora)
                             .addComponent(jTextFieldData)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jComboBoxContato, javax.swing.GroupLayout.Alignment.LEADING, 0, 150, Short.MAX_VALUE)
-                                .addComponent(jComboBoxLocal, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jComboBoxContato, 0, 300, Short.MAX_VALUE)
+                            .addComponent(jComboBoxLocal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 269, Short.MAX_VALUE))
                     .addComponent(jButtonGravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -152,7 +170,20 @@ public class CadastroCompromisso extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldObservacaoActionPerformed
 
     private void jButtonGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGravarActionPerformed
-        // TODO add your handling code here:
+        Contato contato = new ContatoDao().consultar().get(jComboBoxContato.getSelectedIndex());
+        Local local = new LocalDao().consultar().get(jComboBoxLocal.getSelectedIndex());
+
+        Compromisso c = new Compromisso();
+
+        c.setIdContato(contato.getId());
+        c.setIdLocal(local.getId());
+        c.setData(jTextFieldData.getText());
+        c.setHora(jTextFieldHora.getText());
+        c.setObservacao(jTextFieldObservacao.getText());
+
+        if (new CompromissoDao().inserir(c) != null) {
+            JOptionPane.showMessageDialog(null, "Compromisso gravado!");
+        }
     }//GEN-LAST:event_jButtonGravarActionPerformed
 
     private void jTextFieldHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHoraActionPerformed

@@ -59,4 +59,8 @@ public class Local {
         this.id = id;
     }
     
+    @Override
+    public String toString() {
+        return nomeLocal;
+        }
 }
